@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -19,15 +18,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.emergencyphone.adapter.PhoneListAdapter;
+import com.example.emergencyphone.adapter.TeaListAdapter;
 import com.example.emergencyphone.db.DatabaseHelper;
-import com.example.emergencyphone.model.PhoneItem;
+import com.example.emergencyphone.model.TeaItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.emergencyphone.db.DatabaseHelper.COL_ID;
-import static com.example.emergencyphone.db.DatabaseHelper.COL_IMAGE;
+import static com.example.emergencyphone.db.DatabaseHelper.COL_LOCATION;
 import static com.example.emergencyphone.db.DatabaseHelper.COL_NUMBER;
 import static com.example.emergencyphone.db.DatabaseHelper.COL_TITLE;
 import static com.example.emergencyphone.db.DatabaseHelper.TABLE_NAME;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper mHelper;
     private SQLiteDatabase mDb;
-    private List<PhoneItem> mPhoneItemList;
+    private List<TeaItem> mTeaItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         addPhoneItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddPhoneItemActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddTeaItemActivity.class);
                 startActivity(intent);
             }
         });
@@ -93,40 +92,40 @@ public class MainActivity extends AppCompatActivity {
     private void loadPhoneData() {
         Cursor c = mDb.query(TABLE_NAME, null, null, null, null, null, null);
 
-        mPhoneItemList = new ArrayList<>();
+        mTeaItemList = new ArrayList<>();
         while (c.moveToNext()) {
             long id = c.getLong(c.getColumnIndex(COL_ID));
             String title = c.getString(c.getColumnIndex(COL_TITLE));
             String number = c.getString(c.getColumnIndex(COL_NUMBER));
-            String image = c.getString(c.getColumnIndex(COL_IMAGE));
+            String location = c.getString(c.getColumnIndex(COL_LOCATION));
 
-            PhoneItem item = new PhoneItem(id, title, number, image);
-            mPhoneItemList.add(item);
+            TeaItem item = new TeaItem(id, title, number, location);
+            mTeaItemList.add(item);
         }
         c.close();
     }
 
     private void setupListView() {
-        PhoneListAdapter adapter = new PhoneListAdapter(
+        TeaListAdapter adapter = new TeaListAdapter(
                 MainActivity.this,
-                R.layout.item_phone,
-                mPhoneItemList
+                R.layout.item_tea,
+                mTeaItemList
         );
         ListView lv = findViewById(R.id.result_list_view);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                PhoneItem item = mPhoneItemList.get(position);
+                TeaItem item = mTeaItemList.get(position);
 
                 Toast t = Toast.makeText(MainActivity.this, item.number, Toast.LENGTH_SHORT);
                 t.show();
 
-                Intent intent = new Intent(
-                        Intent.ACTION_DIAL,
-                        Uri.parse("tel:" + item.number)
-                );
-                startActivity(intent);
+              //  Intent intent = new Intent(
+              //          Intent.ACTION_DIAL,
+              ////          Uri.parse("tel:" + item.number)
+              //  );
+               // startActivity(intent);
 
             }
         });
@@ -142,26 +141,27 @@ public class MainActivity extends AppCompatActivity {
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                final PhoneItem phoneItem = mPhoneItemList.get(position);
+                                final TeaItem teaItem = mTeaItemList.get(position);
 
                                 switch (i) {
                                     case 0: // Edit
-                                        Intent intent = new Intent(MainActivity.this, EditPhoneItemActivity.class);
-                                        intent.putExtra("title", phoneItem.title);
-                                        intent.putExtra("number", phoneItem.number);
-                                        intent.putExtra("id", phoneItem._id);
+                                        Intent intent = new Intent(MainActivity.this, EditTeaItemActivity.class);
+                                        intent.putExtra("title", teaItem.title);
+                                        intent.putExtra("number", teaItem.number);
+                                        intent.putExtra("location", teaItem.location);
+                                        intent.putExtra("id", teaItem._id);
                                         startActivity(intent);
                                         break;
                                     case 1: // Delete
                                         new AlertDialog.Builder(MainActivity.this)
-                                                .setMessage("ต้องการลบข้อมูลเบอร์โทรนี้ ใช่หรือไม่")
+                                                .setMessage("ต้องการลบข้รายการี้ ใช่หรือไม่")
                                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialogInterface, int i) {
                                                         mDb.delete(
                                                                 TABLE_NAME,
                                                                 COL_ID + " = ?",
-                                                                new String[]{String.valueOf(phoneItem._id)}
+                                                                new String[]{String.valueOf(teaItem._id)}
                                                         );
                                                         loadPhoneData();
                                                         setupListView();

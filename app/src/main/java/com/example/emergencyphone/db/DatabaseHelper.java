@@ -11,18 +11,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "phone.db";
     private static final int DATABASE_VERSION = 1;
 
-    public static final String TABLE_NAME = "phone";
+    public static final String TABLE_NAME = "bubbletea";
     public static final String COL_ID = "_id";
     public static final String COL_TITLE = "title";
     public static final String COL_NUMBER = "number";
-    public static final String COL_IMAGE = "image";
+    public static final String COL_LOCATION = "location";
 
-    private static final String SQL_CREATE_TABLE_PHONE
+    private static final String SQL_CREATE_TABLE_TEA
             = "CREATE TABLE " + TABLE_NAME + "("
             + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COL_TITLE + " TEXT,"
             + COL_NUMBER + " TEXT,"
-            + COL_IMAGE + " TEXT"
+            + COL_LOCATION + " TEXT"
             + ")";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -31,18 +31,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_TABLE_PHONE);
+        db.execSQL(SQL_CREATE_TABLE_TEA);
 
         ContentValues cv = new ContentValues();
-        cv.put(COL_TITLE, "สถาบันการแพทย์ฉุกเฉินแห่งชาติ");
-        cv.put(COL_NUMBER, "1669");
-        cv.put(COL_IMAGE, "emergency_medicine_1669.png");
+        cv.put(COL_TITLE, "Coco");
+        cv.put(COL_NUMBER, "40");
+        cv.put(COL_LOCATION, "Nakornpathom, Sanamchan, 73000, *opposite Silpakorn University");
         db.insert(TABLE_NAME, null, cv);
 
         cv = new ContentValues();
-        cv.put(COL_TITLE, "ศูนย์เอราวัณ สำนักการแพทย์ กทม.");
-        cv.put(COL_NUMBER, "1646");
-        cv.put(COL_IMAGE, "bangkok_ems_1646.png");
+        cv.put(COL_TITLE, "Milk");
+        cv.put(COL_NUMBER, "40");
+        cv.put(COL_LOCATION, "Nakornpathom, Sanamchan, 73000, *opposite Silpakorn University");
+        db.insert(TABLE_NAME, null, cv);
+
+        cv = new ContentValues();
+        cv.put(COL_TITLE, "Milk Tea");
+        cv.put(COL_NUMBER, "55");
+        cv.put(COL_LOCATION, "Nakornpathom, Sanamchan, 73000, *opposite Silpakorn University");
+        db.insert(TABLE_NAME, null, cv);
+
+        cv = new ContentValues();
+        cv.put(COL_TITLE, "Green Tea");
+        cv.put(COL_NUMBER, "55");
+        cv.put(COL_LOCATION, "Nakornpathom, Sanamchan, 73000, *opposite Silpakorn University");
+        db.insert(TABLE_NAME, null, cv);
+
+        cv = new ContentValues();
+        cv.put(COL_TITLE, "Coffee");
+        cv.put(COL_NUMBER, "85");
+        cv.put(COL_LOCATION, "Nakornpathom, Sanamchan, 73000, *opposite Silpakorn University");
         db.insert(TABLE_NAME, null, cv);
     }
 
@@ -50,4 +68,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-} // ปิดคลาส DatabaseHelper
+}

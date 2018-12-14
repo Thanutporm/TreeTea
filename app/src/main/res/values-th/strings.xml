@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ชานม</string>
+    <string name="app_price">ราคา</string>
+    <string name="app_ADD">เพิ่ม</string>
+    <string name="app_SAVE">บันทึก</string>
+    <string name="app_location">สถานที่</string>
+</resources>

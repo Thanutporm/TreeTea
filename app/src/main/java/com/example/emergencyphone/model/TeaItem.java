@@ -2,18 +2,18 @@ package com.example.emergencyphone.model;
 
 import java.util.Locale;
 
-public class PhoneItem {
+public class TeaItem {
 
     public final long _id;
     public final String title;
     public final String number;
-    public final String image;
+    public final String location;
 
-    public PhoneItem(long _id, String title, String number, String image) {
+    public TeaItem(long _id, String title, String number, String location) {
         this._id = _id;
         this.title = title;
         this.number = number;
-        this.image = image;
+        this.location = location;
     }
 
     @Override

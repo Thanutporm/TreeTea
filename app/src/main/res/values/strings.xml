@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Emergency Phone</string>
+    <string name="app_name">TreeTea</string>
+    <string name = "app_price">price</string>
+    <string name="app_location">location</string>
+    <string name="app_ADD">ADD</string>
+    <string name="app_SAVE">SAVE</string>
+
 </resources>
